@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 using System.Configuration;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using FHIR_CLI_Client.Services;
+using System.Web;
+using System.Net;
 namespace FHIR_CLI_Client
 {
     class Program
     {
         static void Main(string[] args)
         {
+            #region
+            /**
             var client = new FhirClient(ConfigurationManager.AppSettings["SparkServerURI"]);
 
             //set up the services
@@ -38,6 +43,22 @@ namespace FHIR_CLI_Client
                 Console.WriteLine("Stub examples created successfully on server");
             else
                 Console.WriteLine("ERROR: Something went wrong.");
+            **/
+            #endregion
+            var order = new DiagnosticOrder();
+            order.Subject = new ResourceReference();
+            order.Subject.Reference = "spark1934";
+            string content = FhirSerializer.SerializeResourceToJson(order);
+            var bytes = System.Text.Encoding.UTF8.GetBytes(content);
+            WebRequest request = WebRequest.Create("http://localhost:49438/api/v1/values");
+            request.Method = "POST";
+            request.ContentType = "text/json";
+            request.ContentLength = bytes.Length;
+            var stream = request.GetRequestStream();
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Close();
+            var st = new System.IO.StreamReader(request.GetResponse().GetResponseStream());
+            Console.Write(st.ReadToEnd());
             Console.ReadLine();
         }
     }
