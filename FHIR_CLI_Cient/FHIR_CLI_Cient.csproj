@@ -52,10 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllergyService.cs" />
-    <Compile Include="MedicationService.cs" />
-    <Compile Include="ObservationService.cs" />
-    <Compile Include="PatientService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
