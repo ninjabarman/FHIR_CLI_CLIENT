@@ -36,7 +36,7 @@ namespace FHIR_CLI_Client
             //TestGround();
             string content = GenerateDiagnosticOrder("DAN1-XYZ", 7, 0);
             var bytes = System.Text.Encoding.UTF8.GetBytes(content);
-            WebRequest request = WebRequest.Create("http://localhost:49438/api/v1/values");
+            WebRequest request = WebRequest.Create("http://localhost:49438/api/v1/diagnostics");
             request.Method = "POST";
             request.ContentType = "text/json";
             request.ContentLength = bytes.Length;
